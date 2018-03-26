@@ -671,9 +671,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Owncloud\\UNI\\17-18\\TFG\\4_Codigo\\TFG-SAHANA\\TFG-SAHANA\\GEPAME-Core\\GEPAME-Core.csproj",
-      "projectName": "GEPAME-Core",
-      "projectPath": "D:\\Owncloud\\UNI\\17-18\\TFG\\4_Codigo\\TFG-SAHANA\\TFG-SAHANA\\GEPAME-Core\\GEPAME-Core.csproj",
+      "projectUniqueName": "D:\\Owncloud\\UNI\\17-18\\TFG\\4_Codigo\\TFG-SAHANA\\TFG-SAHANA\\GEPAME-Core\\GEPAMECore.csproj",
+      "projectName": "GEPAMECore",
+      "projectPath": "D:\\Owncloud\\UNI\\17-18\\TFG\\4_Codigo\\TFG-SAHANA\\TFG-SAHANA\\GEPAME-Core\\GEPAMECore.csproj",
       "packagesPath": "C:\\Users\\Jesus\\.nuget\\packages\\",
       "outputPath": "D:\\Owncloud\\UNI\\17-18\\TFG\\4_Codigo\\TFG-SAHANA\\TFG-SAHANA\\GEPAME-Core\\obj\\",
       "projectStyle": "PackageReference",
