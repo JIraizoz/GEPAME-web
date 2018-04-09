@@ -147,7 +147,7 @@ namespace GEPAMECore.AD
 
         public TipoVehiculo getTipoVehiculo(string codigo)
         {
-            TipoIncidencia t = new TipoIncidencia();
+            TipoVehiculo t = new TipoVehiculo();
             string sql = "SELECT * FROM TIPO_VEHICULO WHERE codigo = @codigo";
 
             try
