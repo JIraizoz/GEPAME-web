@@ -232,7 +232,7 @@ namespace GEPAMECore.AD
             return false;
         }
 
-        public bool deleteTipoIncidencia(string tipoIncidencia)
+        public bool deleteTipoIncidencia(string codigo)
         {
             string sql = "DELETE FROM TIPO_INCIDENCIA WHERE codigo=@codigo";
             try
@@ -240,7 +240,7 @@ namespace GEPAMECore.AD
                 IDbCommand command = this.connection.CreateCommand();
 
                 command.CommandText = sql;
-                command.Parameters.Add(new SqlParameter("@codigo", tipoIncidencia));
+                command.Parameters.Add(new SqlParameter("@codigo", codigo));
 
                 this.connection.Open();
 
