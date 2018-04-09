@@ -13,14 +13,16 @@ namespace GEPAMECore.LD
         private bool estado;
         private string descripcion;
 
+        public Incidencia() { }
+
         public Incidencia(TipoIncidencia tipo, string id, string utm, DateTime fecha, bool estado, string descripcion)
         {
-            this.Tipo = tipo;
-            this.Id = id;
-            this.Utm = utm;
-            this.Fecha = fecha;
-            this.Estado = estado;
-            this.Descripcion = descripcion;
+            this.tipo = tipo;
+            this.id = id ?? throw new ArgumentNullException(nameof(id));
+            this.utm = utm ?? throw new ArgumentNullException(nameof(utm));
+            this.fecha = fecha;
+            this.estado = estado;
+            this.descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
         }
 
         public string Id { get => id; set => id = value; }

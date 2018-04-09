@@ -19,4 +19,3 @@ namespace GEPAMECore.LD
         public string Descripcion { get => descripcion; set => descripcion = value; }
     }
 }
-}

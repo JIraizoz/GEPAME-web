@@ -15,6 +15,8 @@ namespace GEPAMECore.LD
         private bool enServicio;
         private TipoVehiculo tipoVehiculo;
 
+        public Vehiculo() { }
+
         public Vehiculo(string id, string vin, string matricula, string anno, bool desplegado, bool enServicio, TipoVehiculo tipoVehiculo)
         {
             this.Id = id;
