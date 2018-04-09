@@ -2,7 +2,6 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace GEPAMECore.AD
 {
@@ -52,7 +51,7 @@ namespace GEPAMECore.AD
             return i;
         }
 
-        public bool setVehiculo(Incidencia incidencia)
+        public bool setIncidencia(Incidencia incidencia)
         {
             string sql = "INSERT INTO INCIDENCIA VALUES(@tipoIncidencia,@idIncidencia,@utm,@fecha,@estado,@descripcion)";
             try
@@ -84,7 +83,7 @@ namespace GEPAMECore.AD
             return false;
         }
 
-        public bool updateVehiculo(string tipoIncidencia, string idIncidencia, Incidencia incidencia)
+        public bool updateIncidencia(string tipoIncidencia, string idIncidencia, Incidencia incidencia)
         {
             string sql = "UPDATE INCIDENCIA SET tipoIncidencia=@tipo, idIncidencia=@id, utm=@utm, fecha=@fecha, estado=@estado, descripcion=@descripcion WHERE tipoIncidencia=@tipo, idIncidencia=@id";
             try
@@ -116,7 +115,7 @@ namespace GEPAMECore.AD
             return false;
         }
 
-        public bool deleteVehiculo(string tipoIncidencia, string idIncidencia)
+        public bool deleteIncidencia(string tipoIncidencia, string idIncidencia)
         {
             string sql = "DELETE FROM INCIDENCIA WHERE tipoIncidencia=@tipo, idIncidencia=@id";
             try
@@ -124,8 +123,8 @@ namespace GEPAMECore.AD
                 IDbCommand command = this.connection.CreateCommand();
 
                 command.CommandText = sql;
-                command.Parameters.Add(new SqlParameter("@tipoIncidencia", tipoIncidencia));
-                command.Parameters.Add(new SqlParameter("@idIncidencia", idIncidencia));
+                command.Parameters.Add(new SqlParameter("@tipo", tipoIncidencia));
+                command.Parameters.Add(new SqlParameter("@id", idIncidencia));
 
                 this.connection.Open();
 
@@ -175,6 +174,89 @@ namespace GEPAMECore.AD
                     this.connection.Close();
             }
             return t;
+        }
+
+        public bool setTipoIncidencia(TipoIncidencia tipoIncidencia)
+        {
+            string sql = "INSERT INTO TIPO_INCIDENCIA VALUES(@codigo,@descripcion)";
+            try
+            {
+                IDbCommand command = this.connection.CreateCommand();
+
+                command.CommandText = sql;
+                command.Parameters.Add(new SqlParameter("@codigo", tipoIncidencia.Codigo));
+                command.Parameters.Add(new SqlParameter("@descripcion", tipoIncidencia.Descripcion));
+
+                this.connection.Open();
+
+                int i = command.ExecuteNonQuery();
+
+                this.connection.Close();
+
+                if (i == 1)
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                if (!this.connection.State.Equals(ConnectionState.Closed))
+                    this.connection.Close();
+            }
+            return false;
+        }
+
+        public bool updateTipoIncidencia(string codigo, TipoIncidencia tipoIncidencia)
+        {
+            string sql = "UPDATE TIPO_INCIDENCIA SET codigo=@codigo, descripcion=@descripcion WHERE codigo=@codigo";
+            try
+            {
+                IDbCommand command = this.connection.CreateCommand();
+
+                command.CommandText = sql;
+                command.Parameters.Add(new SqlParameter("@codigo", tipoIncidencia.Codigo));
+                command.Parameters.Add(new SqlParameter("@descripcion", tipoIncidencia.Descripcion));
+
+                this.connection.Open();
+
+                int i = command.ExecuteNonQuery();
+
+                this.connection.Close();
+
+                if (i == 1)
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                if (!this.connection.State.Equals(ConnectionState.Closed))
+                    this.connection.Close();
+            }
+            return false;
+        }
+
+        public bool deleteTipoIncidencia(string tipoIncidencia)
+        {
+            string sql = "DELETE FROM TIPO_INCIDENCIA WHERE codigo=@codigo";
+            try
+            {
+                IDbCommand command = this.connection.CreateCommand();
+
+                command.CommandText = sql;
+                command.Parameters.Add(new SqlParameter("@codigo", tipoIncidencia));
+
+                this.connection.Open();
+
+                int i = command.ExecuteNonQuery();
+
+                this.connection.Close();
+
+                if (i == 1)
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                if (!this.connection.State.Equals(ConnectionState.Closed))
+                    this.connection.Close();
+            }
+            return false;
         }
     }
 }
