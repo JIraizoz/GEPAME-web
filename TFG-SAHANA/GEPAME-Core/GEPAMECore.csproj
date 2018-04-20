@@ -22,9 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="DataSet1.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-    </None>
     <None Update="Properties\GEPAME.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
     </None>
