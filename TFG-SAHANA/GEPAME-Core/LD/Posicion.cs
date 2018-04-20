@@ -11,6 +11,10 @@ namespace GEPAMECore.LD
         private string utm;
         private Incidencia incidencia;
 
+        public Posicion()
+        {
+        }
+
         public Posicion(Vehiculo idVehiculo, DateTime fecha, string utm, Incidencia incidencia)
         {
             this.Vehiculo = idVehiculo;

@@ -14,10 +14,11 @@ namespace GEPAMECore.AD
             this.connection = connection;
         }
 
-        public Incidencia getIncidencia(string id)
+        public Incidencia getIncidencia(string id, string tipo)
         {
             Incidencia i = new Incidencia();
-            string sql = "SELECT * FROM INCIDENCIA AS i JOIN TIPO_INCIDENCIA AS ti ON i.tipoIncidencia = ti.codigo WHERE i.idIncidencia = @id";
+            string sql = "SELECT * FROM INCIDENCIA AS i JOIN TIPO_INCIDENCIA AS ti ON i.tipoIncidencia = ti.codigo " +
+                "WHERE i.idIncidencia = @id and i.tipoIncidencia = @tipo";
 
             try
             {
@@ -26,6 +27,7 @@ namespace GEPAMECore.AD
 
                 command.CommandText = sql;
                 command.Parameters.Add(new SqlParameter("@id", id));
+                command.Parameters.Add(new SqlParameter("@tipo", tipo));
 
                 this.connection.Open();
 
