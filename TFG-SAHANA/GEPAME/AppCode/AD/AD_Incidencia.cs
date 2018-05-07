@@ -1,5 +1,6 @@
-﻿using GEPAMECore.LD;
+﻿using GEPAME.LD;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -51,6 +52,94 @@ namespace GEPAME.AD
                     this.connection.Close();
             }
             return i;
+        }
+
+        public IEnumerable<Incidencia> getIncidencias(bool activa = true)
+        {
+            Incidencia i = null;
+            List<Incidencia> lIncidencias = new List<Incidencia>();
+
+            string sql = "SELECT * FROM INCIDENCIA AS i JOIN TIPO_INCIDENCIA AS ti ON i.tipoIncidencia = ti.codigo " +
+                "WHERE i.estado = @estado";
+
+            try
+            {
+
+                IDbCommand command = this.connection.CreateCommand();
+
+                command.CommandText = sql;
+                command.Parameters.Add(new SqlParameter("@estado", activa));
+
+                this.connection.Open();
+
+                IDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    i = new Incidencia();
+                    i.Id = reader.GetString(1);
+                    i.Utm = reader.GetString(2);
+                    i.Fecha = reader.GetDateTime(3);
+                    i.Estado = reader.GetBoolean(4);
+                    i.Descripcion = reader.GetString(5);
+                    i.Tipo = new TipoIncidencia(reader.GetString(6), reader.GetString(7));
+
+                    lIncidencias.Add(i);
+                }
+
+                this.connection.Close();
+            }
+            catch (Exception ex)
+            {
+                if (!this.connection.State.Equals(ConnectionState.Closed))
+                    this.connection.Close();
+            }
+            return lIncidencias;
+        }
+
+        public IEnumerable<Incidencia> getIncidencias(string id, string tipo, bool activa = true)
+        {
+            Incidencia i = null;
+            List<Incidencia> lIncidencias = new List<Incidencia>();
+
+            string sql = "SELECT * FROM INCIDENCIA AS i JOIN TIPO_INCIDENCIA AS ti ON i.tipoIncidencia = ti.codigo " +
+                "WHERE i.idIncidencia = @id and i.tipoIncidencia = @tipo and i.estado = @estado";
+
+            try
+            {
+
+                IDbCommand command = this.connection.CreateCommand();
+
+                command.CommandText = sql;
+                command.Parameters.Add(new SqlParameter("@id", id));
+                command.Parameters.Add(new SqlParameter("@tipo", tipo));
+                command.Parameters.Add(new SqlParameter("@estado", activa));
+
+                this.connection.Open();
+
+                IDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    i = new Incidencia();
+                    i.Id = reader.GetString(1);
+                    i.Utm = reader.GetString(2);
+                    i.Fecha = reader.GetDateTime(3);
+                    i.Estado = reader.GetBoolean(4);
+                    i.Descripcion = reader.GetString(5);
+                    i.Tipo = new TipoIncidencia(reader.GetString(6), reader.GetString(7));
+
+                    lIncidencias.Add(i);
+                }
+
+                this.connection.Close();
+            }
+            catch (Exception ex)
+            {
+                if (!this.connection.State.Equals(ConnectionState.Closed))
+                    this.connection.Close();
+            }
+            return lIncidencias;
         }
 
         public bool setIncidencia(Incidencia incidencia)

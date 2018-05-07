@@ -1,4 +1,4 @@
-﻿using GEPAMECore.LD;
+﻿using GEPAME.LD;
 using System;
 using System.Data;
 using System.Data.SqlClient;
