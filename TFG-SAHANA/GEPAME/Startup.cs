@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.MySqlClient;
 
 namespace GEPAME
 {
@@ -40,8 +42,13 @@ namespace GEPAME
             //});
 
             services.AddMvc();
-            var connection = Configuration.GetConnectionString("DefaultConnection");
+//#if DEBUG
+            var connection = Configuration.GetConnectionString("AzureConnection");
             services.AddDbContext<GEPAMEContext>(options => options.UseSqlServer(connection));
+//#else
+//            var connection = Configuration.GetConnectionString("MysqlConnection");
+//            services.AddDbContext<GEPAMEContext>(options => options.UseMySQL(connection));
+//#endif
             services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
