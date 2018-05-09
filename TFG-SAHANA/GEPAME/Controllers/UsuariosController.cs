@@ -20,7 +20,7 @@ namespace GEPAME.Controllers
         }
 
         // GET: Usuarios
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Index()
         {
             var gEPAMEContext = _context.Usuario.Include(u => u.RolNavigation);
