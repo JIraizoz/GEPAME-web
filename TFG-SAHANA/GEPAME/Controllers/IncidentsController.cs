@@ -26,7 +26,7 @@ namespace GEPAME.Controllers
         }
 
         // GET: Incidents/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id, string tipoIncidencia)
         {
             if (id == null)
             {
@@ -35,7 +35,7 @@ namespace GEPAME.Controllers
 
             var incidencia = await _context.Incidencia
                 .Include(i => i.TipoIncidenciaNavigation)
-                .SingleOrDefaultAsync(m => m.TipoIncidencia == id);
+                .SingleOrDefaultAsync(m => m.TipoIncidencia == tipoIncidencia && m.IdIncidencia == id);
             if (incidencia == null)
             {
                 return NotFound();
@@ -69,14 +69,14 @@ namespace GEPAME.Controllers
         }
 
         // GET: Incidents/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string id, string tipoIncidencia)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var incidencia = await _context.Incidencia.SingleOrDefaultAsync(m => m.TipoIncidencia == id);
+            var incidencia = await _context.Incidencia.SingleOrDefaultAsync(m => m.TipoIncidencia == tipoIncidencia && m.IdIncidencia == id);
             if (incidencia == null)
             {
                 return NotFound();
@@ -90,9 +90,9 @@ namespace GEPAME.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("TipoIncidencia,IdIncidencia,Utm,Fecha,Estado,Descripcion")] Incidencia incidencia)
+        public async Task<IActionResult> Edit(string id, string tipoIncidencia, [Bind("TipoIncidencia,IdIncidencia,Utm,Fecha,Estado,Descripcion")] Incidencia incidencia)
         {
-            if (id != incidencia.TipoIncidencia)
+            if (tipoIncidencia != incidencia.TipoIncidencia)
             {
                 return NotFound();
             }
@@ -106,7 +106,7 @@ namespace GEPAME.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!IncidenciaExists(incidencia.TipoIncidencia))
+                    if (!IncidenciaExists(incidencia.IdIncidencia, incidencia.TipoIncidencia))
                     {
                         return NotFound();
                     }
@@ -122,7 +122,7 @@ namespace GEPAME.Controllers
         }
 
         // GET: Incidents/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string id, string tipoIncidencia)
         {
             if (id == null)
             {
@@ -131,7 +131,7 @@ namespace GEPAME.Controllers
 
             var incidencia = await _context.Incidencia
                 .Include(i => i.TipoIncidenciaNavigation)
-                .SingleOrDefaultAsync(m => m.TipoIncidencia == id);
+                .SingleOrDefaultAsync(m => m.TipoIncidencia == tipoIncidencia && m.IdIncidencia == id);
             if (incidencia == null)
             {
                 return NotFound();
@@ -143,17 +143,17 @@ namespace GEPAME.Controllers
         // POST: Incidents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string id, string tipoIncidencia)
         {
-            var incidencia = await _context.Incidencia.SingleOrDefaultAsync(m => m.TipoIncidencia == id);
+            var incidencia = await _context.Incidencia.SingleOrDefaultAsync(m => m.TipoIncidencia == tipoIncidencia && m.IdIncidencia == id);
             _context.Incidencia.Remove(incidencia);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool IncidenciaExists(string id)
+        private bool IncidenciaExists(string id, string tipoIncidencia)
         {
-            return _context.Incidencia.Any(e => e.TipoIncidencia == id);
+            return _context.Incidencia.Any(e => e.TipoIncidencia == tipoIncidencia && e.IdIncidencia == id);
         }
     }
 }
