@@ -1,44 +1,139 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
-using GEPAME.AD;
-using GEPAME.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using GEPAME.Models;
 
-namespace GEPAME.Controllers
+namespace GEPAME.Controllers.api
 {
     [Produces("application/json")]
     [Route("api/Incidencias")]
     public class IncidenciasController : Controller
     {
+        private readonly GEPAMEContext _context;
+
+        public IncidenciasController(GEPAMEContext context)
+        {
+            _context = context;
+        }
+
         // GET: api/Incidencias
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Incidencia> GetIncidencia()
         {
-            List<string> incidenciaSer = new List<string>();
+            return _context.Incidencia;
+        }
 
-            var incidencias = new AD_Incidencia(new AD_GestorSqlServer("Data Source=localhost;Initial Catalog=GEPAME;Integrated Security=True").Connection).getIncidencias();
-
-            XmlSerializer mySerializer = new XmlSerializer(typeof(GEPAME.LD.Incidencia));
-            StringWriter sw = new StringWriter();
-
-            foreach (var i in incidencias)
+        // GET: api/Incidencias/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetIncidencia([FromRoute] string id)
+        {
+            if (!ModelState.IsValid)
             {
-                mySerializer.Serialize(sw, i);
-                incidenciaSer.Add(sw.ToString());
-                sw.Flush();
+                return BadRequest(ModelState);
             }
-            sw.Close();
 
+            var incidencia = await _context.Incidencia.SingleOrDefaultAsync(m => m.TipoIncidencia == id);
 
+            if (incidencia == null)
+            {
+                return NotFound();
+            }
 
-            return incidenciaSer;
+            return Ok(incidencia);
+        }
+
+        // PUT: api/Incidencias/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutIncidencia([FromRoute] string id, [FromBody] Incidencia incidencia)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != incidencia.TipoIncidencia)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(incidencia).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!IncidenciaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Incidencias
+        [HttpPost]
+        public async Task<IActionResult> PostIncidencia([FromBody] Incidencia incidencia)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Incidencia.Add(incidencia);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (IncidenciaExists(incidencia.TipoIncidencia))
+                {
+                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtAction("GetIncidencia", new { id = incidencia.TipoIncidencia }, incidencia);
+        }
+
+        // DELETE: api/Incidencias/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteIncidencia([FromRoute] string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var incidencia = await _context.Incidencia.SingleOrDefaultAsync(m => m.TipoIncidencia == id);
+            if (incidencia == null)
+            {
+                return NotFound();
+            }
+
+            _context.Incidencia.Remove(incidencia);
+            await _context.SaveChangesAsync();
+
+            return Ok(incidencia);
+        }
+
+        private bool IncidenciaExists(string id)
+        {
+            return _context.Incidencia.Any(e => e.TipoIncidencia == id);
         }
     }
 }
