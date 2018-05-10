@@ -50,5 +50,31 @@ namespace GEPAME.AppCode.LN
 
             return id;
         }
+
+        public IQueryable<Incidencia> GetTopIncidences(GEPAMEContext context)
+        {
+            if (context.Incidencia.Count() > 0)
+            {
+                var incidencias = (from i in context.Incidencia
+                                   orderby i.Fecha descending
+                                   where i.Estado
+                                  select i).Take(5);
+                return incidencias;
+            }
+            return null;
+        }
+
+        public IQueryable<Vehiculo> GetActiveVehicles(GEPAMEContext context)
+        {
+            if (context.Vehiculo.Count() > 0)
+            {
+                var vehiculos = from v in context.Vehiculo
+                                where v.Desplegado && v.EnServicio
+                                select v;
+
+                return vehiculos;
+            }
+            return null;
+        }
     }
 }

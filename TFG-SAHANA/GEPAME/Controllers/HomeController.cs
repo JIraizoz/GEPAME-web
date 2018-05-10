@@ -5,14 +5,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GEPAME.Models;
+using Microsoft.EntityFrameworkCore;
+using GEPAME.AppCode.LN;
 
 namespace GEPAME.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly GEPAMEContext _context;
+
+        public HomeController(GEPAMEContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var gEPAMEContext = new LN_Utilidades().GetTopIncidences(_context);
+            ViewData["Vehicle"] = new LN_Utilidades().GetActiveVehicles(_context);
+            return View(await gEPAMEContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> IndexVehicle()
+        {
+            var gEPAMEContext = new LN_Utilidades().GetActiveVehicles(_context);
+            return PartialView(await gEPAMEContext.ToListAsync());
         }
 
         public IActionResult About()
