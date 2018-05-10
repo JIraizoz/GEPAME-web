@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GEPAME.Models;
+using GEPAME.AppCode.LN;
 
 namespace GEPAME.Controllers
 {
@@ -20,6 +21,12 @@ namespace GEPAME.Controllers
 
         // GET: Incidents
         public async Task<IActionResult> Index()
+        {
+            var gEPAMEContext = _context.Incidencia.Include(i => i.TipoIncidenciaNavigation);
+            return View(await gEPAMEContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> Map()
         {
             var gEPAMEContext = _context.Incidencia.Include(i => i.TipoIncidenciaNavigation);
             return View(await gEPAMEContext.ToListAsync());
@@ -48,6 +55,9 @@ namespace GEPAME.Controllers
         public IActionResult Create()
         {
             ViewData["TipoIncidencia"] = new SelectList(_context.TipoIncidencia, "Codigo", "Codigo");
+            //    var posicion = new LN_Utilidades().GetPosicionIncidencia(_context);
+            //ViewData["Posicion"] = posicion;
+            ViewData["SiguienteID"] = GetSiguienteID(_context.TipoIncidencia.First().Codigo);
             return View();
         }
 
@@ -154,6 +164,15 @@ namespace GEPAME.Controllers
         private bool IncidenciaExists(string id, string tipoIncidencia)
         {
             return _context.Incidencia.Any(e => e.TipoIncidencia == tipoIncidencia && e.IdIncidencia == id);
+        }
+
+        private string GetSiguienteID(string tipoIncidencia)
+        {
+            string id = "";
+
+            id = new LN_Utilidades().GetSiguienteIDIncidencia(_context, tipoIncidencia);
+
+            return id;
         }
     }
 }
