@@ -1,4 +1,5 @@
 ﻿@model GEPAME.Models.Incidencia
+@using GEPAME.AppCode.LN;
 
 @{
     ViewData["Title"] = "Create";
@@ -14,21 +15,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="TipoIncidencia" class="control-label"></label>
-                <select asp-for="TipoIncidencia" class ="form-control" asp-items="ViewBag.TipoIncidencia"></select>
+                <select asp-for="TipoIncidencia" class="form-control" id="selectTipoIncidencia" asp-items="ViewBag.TipoIncidencia"></select>
             </div>
             <div class="form-group">
                 <label asp-for="IdIncidencia" class="control-label"></label>
-                <input asp-for="IdIncidencia" class="form-control" />
+                <input asp-for="IdIncidencia" class="form-control" id="IdInput" value="@ViewBag.SiguienteID" />
                 <span asp-validation-for="IdIncidencia" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Utm" class="control-label"></label>
-                <input asp-for="Utm" class="form-control" />
+                <input asp-for="Utm" id="positionInput" class="form-control" />
                 <span asp-validation-for="Utm" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
+                <input asp-for="Fecha" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")"/>
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,11 +49,31 @@
             </div>
         </form>
     </div>
+    <section class="col-md-8" id="mapa">
+        <div id="map"></div>
+    </section>
+
+
 </div>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<script>
+    var selectElem = document.getElementById('selectTipoIncidencia')
+    var pElem = document.getElementById('IdInput')
+
+    // When a new <option> is selected
+    selectElem.addEventListener('change', function () {
+        var index = selectElem.selectedIndex;
+        pElem.textContent = "";
+        // Add that data to the <p>
+
+        //pElem.value =
+    })
+</script>
+<script src="~/js/site.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL77JCMRSKuYDFeNahniCRP9ZO-AuIWG4&callback=initMap"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
