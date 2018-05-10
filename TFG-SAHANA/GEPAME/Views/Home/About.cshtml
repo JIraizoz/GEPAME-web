@@ -2,6 +2,22 @@
     ViewData["Title"] = "About";
 }
 <h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<section>
+    <article>
+        <h3>GEPAME</h3>
+        <p>
+            This application has been created for the Final Degree Project of the Complutense University of Madrid (<a target="_blank" href="https://www.ucm.es/">UCM</a>) during the final year of Computer Science Engineering.
+            <br /> This is an upgrade of the <a target="_blank" href="http://eden.sahanafoundation.org/wiki/BluePrint/Vehicle/ProjMgt">original project</a> described in the Sahana Eden Foundation.
+        </p>
+        <p>The aim of this application is to offer support in the management of emergency situations , specifically, in relation to emergency vehicles.</p>
+    </article>
+    <article>
+        <h3>Licence</h3>
+        <p>Pending</p>
+    </article>
+</section>
+<br />
+<section>
+    @await Html.PartialAsync("Contact")
+</section>
