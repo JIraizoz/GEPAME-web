@@ -42,13 +42,13 @@ namespace GEPAME
             //});
 
             services.AddMvc();
-//#if DEBUG
+            //#if DEBUG
+            //var connection = Configuration.GetConnectionString("DefaultConnection");
             var connection = Configuration.GetConnectionString("AzureConnection");
+            //            var connection = Configuration.GetConnectionString("MysqlConnection");
+            //            services.AddDbContext<GEPAMEContext>(options => options.UseMySQL(connection));
+            //#endif
             services.AddDbContext<GEPAMEContext>(options => options.UseSqlServer(connection));
-//#else
-//            var connection = Configuration.GetConnectionString("MysqlConnection");
-//            services.AddDbContext<GEPAMEContext>(options => options.UseMySQL(connection));
-//#endif
             services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
 
             services.AddIdentity<IdentityUser, IdentityRole>()

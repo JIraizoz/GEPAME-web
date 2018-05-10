@@ -34,7 +34,14 @@
     }
 }
 
-#mapid div{
-    height: 180px;
-    margin-top: 50%;
+#mapa #map {
+    height: 500px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.row #mapa #map {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
 }
