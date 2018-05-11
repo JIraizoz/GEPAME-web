@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace GEPAME
 {
@@ -53,6 +54,18 @@ namespace GEPAME
 
             services.AddIdentity<IdentityUser, IdentityRole>()
               .AddEntityFrameworkStores<GEPAMEContext>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "GEPAME API REST",
+                    Description = "Descripcion of the API REST",
+                    TermsOfService = "None",
+                    Contact = new Contact() { Name = "J. Iráizoz", Email = "jesusiraizoz@gmail.com", Url = "https://www.jiraizoz.es" }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +91,12 @@ namespace GEPAME
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GEPAME API V1");
             });
         }
     }
