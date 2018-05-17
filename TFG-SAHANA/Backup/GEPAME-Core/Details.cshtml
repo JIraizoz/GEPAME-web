@@ -1,0 +1,54 @@
+﻿@model GEPAME.Models.Vehiculo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vehiculo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Vin)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Matricula)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Matricula)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Anyo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Anyo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Desplegado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Desplegado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnServicio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnServicio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoVehiculoNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TipoVehiculoNavigation.Codigo)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
