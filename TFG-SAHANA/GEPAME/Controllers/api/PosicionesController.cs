@@ -46,41 +46,6 @@ namespace GEPAME.Controllers.api
             return Ok(posicion);
         }
 
-        // PUT: api/Posiciones/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPosicion([FromRoute] string id, [FromBody] Posicion posicion)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != posicion.IdVehiculo)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(posicion).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PosicionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Posiciones
         [HttpPost]
         public async Task<IActionResult> PostPosicion([FromBody] Posicion posicion)
@@ -110,30 +75,71 @@ namespace GEPAME.Controllers.api
             return CreatedAtAction("GetPosicion", new { id = posicion.IdVehiculo }, posicion);
         }
 
-        // DELETE: api/Posiciones/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePosicion([FromRoute] string id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var posicion = await _context.Posicion.SingleOrDefaultAsync(m => m.IdVehiculo == id);
-            if (posicion == null)
-            {
-                return NotFound();
-            }
-
-            _context.Posicion.Remove(posicion);
-            await _context.SaveChangesAsync();
-
-            return Ok(posicion);
-        }
-
         private bool PosicionExists(string id)
         {
             return _context.Posicion.Any(e => e.IdVehiculo == id);
         }
+
+        //#region SinUsar
+
+        //// PUT: api/Posiciones/5
+        ////[HttpPut("{id}")]
+        //public async Task<IActionResult> PutPosicion([FromRoute] string id, [FromBody] Posicion posicion)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != posicion.IdVehiculo)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _context.Entry(posicion).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!PosicionExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
+
+
+        //// DELETE: api/Posiciones/5
+        ////[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeletePosicion([FromRoute] string id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var posicion = await _context.Posicion.SingleOrDefaultAsync(m => m.IdVehiculo == id);
+        //    if (posicion == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _context.Posicion.Remove(posicion);
+        //    await _context.SaveChangesAsync();
+
+        //    return Ok(posicion);
+        //}
+
+        //#endregion
     }
 }

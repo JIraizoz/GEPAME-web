@@ -57,9 +57,9 @@ namespace GEPAME
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1.1", new Info
                 {
-                    Version = "v1",
+                    Version = "v1.1",
                     Title = "GEPAME API REST",
                     Description = "Descripcion of the API REST",
                     TermsOfService = "None",
@@ -96,7 +96,7 @@ namespace GEPAME
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GEPAME API V1");
+                c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "GEPAME API V1.1");
             });
         }
     }

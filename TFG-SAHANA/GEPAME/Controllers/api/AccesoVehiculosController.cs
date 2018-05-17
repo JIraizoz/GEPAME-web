@@ -10,59 +10,59 @@ using GEPAME.Models;
 namespace GEPAME.Controllers.api
 {
     [Produces("application/json")]
-    [Route("api/Incidencias")]
-    public class IncidenciasController : Controller
+    [Route("api/AccesoVehiculos")]
+    public class AccesoVehiculosController : Controller
     {
         private readonly GEPAMEContext _context;
 
-        public IncidenciasController(GEPAMEContext context)
+        public AccesoVehiculosController(GEPAMEContext context)
         {
             _context = context;
         }
 
-        // GET: api/Incidencias
+        // GET: api/AccesoVehiculos
         [HttpGet]
-        public IEnumerable<Incidencia> GetIncidencia()
+        public IEnumerable<AccesoVehiculo> GetAccesoVehiculo()
         {
-            return _context.Incidencia;
+            return _context.AccesoVehiculo;
         }
 
-        // GET: api/Incidencias/5
+        // GET: api/AccesoVehiculos/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetIncidencia([FromRoute] string id)
+        public async Task<IActionResult> GetAccesoVehiculo([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var incidencia = await _context.Incidencia.SingleOrDefaultAsync(m => m.TipoIncidencia == id);
+            var accesoVehiculo = await _context.AccesoVehiculo.SingleOrDefaultAsync(m => m.IdVehiculo == id);
 
-            if (incidencia == null)
+            if (accesoVehiculo == null)
             {
                 return NotFound();
             }
 
-            return Ok(incidencia);
+            return Ok(accesoVehiculo);
         }
 
-        // POST: api/Incidencias
+        // POST: api/AccesoVehiculos
         [HttpPost]
-        public async Task<IActionResult> PostIncidencia([FromBody] Incidencia incidencia)
+        public async Task<IActionResult> PostAccesoVehiculo([FromBody] AccesoVehiculo accesoVehiculo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Incidencia.Add(incidencia);
+            _context.AccesoVehiculo.Add(accesoVehiculo);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (IncidenciaExists(incidencia.TipoIncidencia))
+                if (AccesoVehiculoExists(accesoVehiculo.IdVehiculo))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -72,40 +72,37 @@ namespace GEPAME.Controllers.api
                 }
             }
 
-            return CreatedAtAction("GetIncidencia", new { id = incidencia.TipoIncidencia }, incidencia);
+            return CreatedAtAction("GetAccesoVehiculo", new { id = accesoVehiculo.IdVehiculo }, accesoVehiculo);
         }
 
-        private bool IncidenciaExists(string id)
+        private bool AccesoVehiculoExists(string id)
         {
-            return _context.Incidencia.Any(e => e.TipoIncidencia == id);
+            return _context.AccesoVehiculo.Any(e => e.IdVehiculo == id);
         }
 
-        #region SinUsar
-
-        //// PUT: api/Incidencias/5
-        ////[HttpPut("{id}")]
-        //public async Task<IActionResult> PutIncidencia([FromRoute] string id, [FromBody] Incidencia incidencia)
+        //// PUT: api/AccesoVehiculos/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutAccesoVehiculo([FromRoute] string id, [FromBody] AccesoVehiculo accesoVehiculo)
         //{
         //    if (!ModelState.IsValid)
         //    {
         //        return BadRequest(ModelState);
         //    }
 
-        //    if (id != incidencia.TipoIncidencia)
+        //    if (id != accesoVehiculo.IdVehiculo)
         //    {
         //        return BadRequest();
         //    }
 
-        //    _context.Entry(incidencia).State = EntityState.Modified;
+        //    _context.Entry(accesoVehiculo).State = EntityState.Modified;
 
         //    try
         //    {
         //        await _context.SaveChangesAsync();
         //    }
-
         //    catch (DbUpdateConcurrencyException)
         //    {
-        //        if (!IncidenciaExists(id))
+        //        if (!AccesoVehiculoExists(id))
         //        {
         //            return NotFound();
         //        }
@@ -118,28 +115,25 @@ namespace GEPAME.Controllers.api
         //    return NoContent();
         //}
 
-
-        //// DELETE: api/Incidencias/5
-        ////[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteIncidencia([FromRoute] string id)
+        //// DELETE: api/AccesoVehiculos/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteAccesoVehiculo([FromRoute] string id)
         //{
         //    if (!ModelState.IsValid)
         //    {
         //        return BadRequest(ModelState);
         //    }
 
-        //    var incidencia = await _context.Incidencia.SingleOrDefaultAsync(m => m.TipoIncidencia == id);
-        //    if (incidencia == null)
+        //    var accesoVehiculo = await _context.AccesoVehiculo.SingleOrDefaultAsync(m => m.IdVehiculo == id);
+        //    if (accesoVehiculo == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    _context.Incidencia.Remove(incidencia);
+        //    _context.AccesoVehiculo.Remove(accesoVehiculo);
         //    await _context.SaveChangesAsync();
 
-        //    return Ok(incidencia);
+        //    return Ok(accesoVehiculo);
         //}
-
-        #endregion
     }
 }
