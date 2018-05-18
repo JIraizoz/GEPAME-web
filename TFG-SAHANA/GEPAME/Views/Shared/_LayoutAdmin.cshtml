@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GEPAME</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+
+    @*<environment include="Development">*@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @*</environment>
+        <environment exclude="Development">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        </environment>*@
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">GEPAME</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Map" asp-action="Index">Situation Map</a></li>
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" asp-area="" asp-controller="Vehicles" asp-action="Index">Vehicles</a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Vehicles" asp-action="Index">Manage Vehicles</a></li>
+                            <li><a asp-controller="TypeVehicles" asp-action="Index">Type of Vehicles</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" asp-area="" asp-controller="Incidents" asp-action="Index">Incidents</a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Incidents" asp-action="Index">Manage Incidents</a></li>
+                            <li><a asp-controller="TypeIncidents" asp-action="Index">Type of Incidents</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" asp-area="" asp-controller="Usuarios" asp-action="About">Users</a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Usuarios" asp-action="Index">Manage Users</a></li>
+                            <li><a asp-controller="Rols" asp-action="Index">Rols</a></li>
+                        </ul>
+                    </li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        <section>
+            @RenderBody()
+        </section>
+        <hr />
+        <footer>
+            <p class="col-md-10">&copy; 2018 - GEPAME</p>
+            <p class="col-md-2" style="text-align:right;">version: alpha</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/GEPAME/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

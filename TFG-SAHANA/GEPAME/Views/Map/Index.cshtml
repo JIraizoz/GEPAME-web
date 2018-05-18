@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Map";
+}
+<section id="mapa">
+    <div id="map"></div>
+</section>
+
+<script>
+    function initMap() {
+        var uluru = { lat: 42.463139, lng: -2.4453973,  };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+        
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL77JCMRSKuYDFeNahniCRP9ZO-AuIWG4&callback=initMap">
+</script>

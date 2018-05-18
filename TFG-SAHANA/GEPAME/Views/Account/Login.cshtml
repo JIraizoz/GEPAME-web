@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<section>
+    <div class="text-center">
+        <form class="form-signin" action="/SignIn" method="post">
+            <input type="text" required name="fuser" class="form-control" autofocus placeholder="Username" />
+            <input type="password" required name="fpass" class="form-control" placeholder="Password"/>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Sign In</button>
+        </form>
+    </div>
+</section>
