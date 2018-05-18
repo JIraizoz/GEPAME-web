@@ -1,3 +1,10 @@
 ﻿@{
-    Layout = "_LayoutAdmin";
+    @if (User.Identity.IsAuthenticated)
+    {
+        Layout = "_LayoutAdmin";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 }

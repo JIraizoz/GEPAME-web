@@ -6,8 +6,10 @@ using System.Net;
 using System.Threading.Tasks;
 using GEPAME.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,20 +31,70 @@ namespace GEPAME
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // avoid redirecting REST clients on 401
-            //    options.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
-            //    {
-            //        OnRedirectToLogin = ctx =>
-            //        {
-            //            ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            //            return Task.FromResult(0);
-            //        }
-            //    };
-            //});
 
             services.AddMvc();
+
+            #region auth
+            // Add authentication services
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddOpenIdConnect("Auth0", options => {
+                // Set the authority to your Auth0 domain
+                options.Authority = $"https://{Configuration["Auth0:Domain"]}";
+
+                // Configure the Auth0 Client ID and Client Secret
+                options.ClientId = Configuration["Auth0:ClientId"];
+                options.ClientSecret = Configuration["Auth0:ClientSecret"];
+
+                // Set response type to code
+                options.ResponseType = "code";
+
+                // Configure the scope
+                options.Scope.Clear();
+                options.Scope.Add("openid");
+
+                // Set the callback path, so Auth0 will call back to http://localhost:5000/signin-auth0 
+                // Also ensure that you have added the URL as an Allowed Callback URL in your Auth0 dashboard 
+                options.CallbackPath = new PathString("/signin-auth0");
+
+                // Configure the Claims Issuer to be Auth0
+                options.ClaimsIssuer = "Auth0";
+
+                // Saves tokens to the AuthenticationProperties
+                options.SaveTokens = true;
+
+                options.Events = new OpenIdConnectEvents
+                {
+                    // handle the logout redirection 
+                    OnRedirectToIdentityProviderForSignOut = (context) =>
+                    {
+                        var logoutUri = $"https://{Configuration["Auth0:Domain"]}/v2/logout?client_id={Configuration["Auth0:ClientId"]}";
+
+                        var postLogoutUri = context.Properties.RedirectUri;
+                        if (!string.IsNullOrEmpty(postLogoutUri))
+                        {
+                            if (postLogoutUri.StartsWith("/"))
+                            {
+                                // transform to absolute
+                                var request = context.Request;
+                                postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
+                            }
+                            logoutUri += $"&returnTo={ Uri.EscapeDataString(postLogoutUri)}";
+                        }
+
+                        context.Response.Redirect(logoutUri);
+                        context.HandleResponse();
+
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+            #endregion
+
             //#if DEBUG
             //var connection = Configuration.GetConnectionString("DefaultConnection");
             var connection = Configuration.GetConnectionString("AzureConnection");
@@ -50,10 +102,10 @@ namespace GEPAME
             //            services.AddDbContext<GEPAMEContext>(options => options.UseMySQL(connection));
             //#endif
             services.AddDbContext<GEPAMEContext>(options => options.UseSqlServer(connection));
-            services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-              .AddEntityFrameworkStores<GEPAMEContext>();
+            //services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //  .AddEntityFrameworkStores<GEPAMEContext>();
 
             services.AddSwaggerGen(c =>
             {
@@ -73,7 +125,6 @@ namespace GEPAME
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -83,7 +134,6 @@ namespace GEPAME
 
             app.UseStaticFiles();
 
-            //app.UseIdentity();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
