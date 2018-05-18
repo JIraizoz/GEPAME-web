@@ -1,0 +1,12 @@
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\bin\Debug\netcoreapp2.0\GEPAME.deps.json
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\bin\Debug\netcoreapp2.0\GEPAME.runtimeconfig.json
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\bin\Debug\netcoreapp2.0\GEPAME.runtimeconfig.dev.json
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\bin\Debug\netcoreapp2.0\GEPAME.dll
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\bin\Debug\netcoreapp2.0\GEPAME.pdb
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\obj\Debug\netcoreapp2.0\GEPAME.csproj.CoreCompileInputs.cache
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\obj\Debug\netcoreapp2.0\GEPAME.AssemblyInfoInputs.cache
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\obj\Debug\netcoreapp2.0\GEPAME.AssemblyInfo.cs
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\obj\Debug\netcoreapp2.0\GEPAME.dll
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\obj\Debug\netcoreapp2.0\GEPAME.pdb
+D:\Owncloud\UNI\17-18\TFG\4_Codigo\TFG-SAHANA\TFG-SAHANA\GEPAME\obj\Debug\netcoreapp2.0\GEPAME.csprojAssemblyReference.cache
