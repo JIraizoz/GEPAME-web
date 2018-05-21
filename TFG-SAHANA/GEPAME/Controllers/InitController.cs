@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GEPAME.Controllers
 {
-    [Authorize]
-    public class MapController : Controller
+    public class InitController : Controller
     {
-        public IActionResult Index()
+        // GET: Init
+        public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("index", "home");
+            }
             return View();
         }
     }

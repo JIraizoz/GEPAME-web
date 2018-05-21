@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GEPAME.Models;
 using GEPAME.AppCode.LN;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GEPAME.Controllers
 {
+    [Authorize]
     public class IncidentsController : Controller
     {
         private readonly GEPAMEContext _context;

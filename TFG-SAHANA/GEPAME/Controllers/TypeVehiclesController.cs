@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GEPAME.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GEPAME.Controllers
 {
+    [Authorize]
     public class TypeVehiclesController : Controller
     {
         private readonly GEPAMEContext _context;

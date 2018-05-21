@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using GEPAME.Models;
 using Microsoft.EntityFrameworkCore;
 using GEPAME.AppCode.LN;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GEPAME.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly GEPAMEContext _context;

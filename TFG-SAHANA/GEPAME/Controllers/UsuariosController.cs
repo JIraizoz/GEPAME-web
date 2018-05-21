@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GEPAME.Controllers
 {
+    [Authorize(Roles = "1")]
     public class UsuariosController : Controller
     {
         private readonly GEPAMEContext _context;
