@@ -21,10 +21,16 @@ namespace GEPAME.Controllers.api
         }
 
         // GET: api/Incidencias
+        /// <summary>
+        /// Gets a list of active Incidencias
+        /// </summary>
+        /// <returns>IEnumerable of Incidencia</returns>
         [HttpGet]
         public IEnumerable<Incidencia> GetIncidencia()
         {
-            return _context.Incidencia;
+            return from inc in _context.Incidencia
+                   where inc.Estado
+                   select inc;
         }
 
         // GET: api/Incidencias/5
