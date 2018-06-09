@@ -3,6 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>a5d39644-6996-4666-a8c5-4d06ba82829c</UserSecretsId>
+    <Authors>JIraizoz</Authors>
+    <PackageProjectUrl>https://github.com/JIraizoz/TFG-SAHANA</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JIraizoz/TFG-SAHANA</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/JIraizoz/TFG-SAHANA/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Jesús Iráizoz, MIT License</Copyright>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

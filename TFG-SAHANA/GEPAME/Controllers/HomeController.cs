@@ -34,6 +34,7 @@ namespace GEPAME.Controllers
             return PartialView(await gEPAMEContext.ToListAsync());
         }
 
+        [AllowAnonymous]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
